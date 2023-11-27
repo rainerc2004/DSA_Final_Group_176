@@ -6,6 +6,9 @@
 #include <utility>
 #include <algorithm>
 #include <random>
+#include <unordered_set>
+#include <cmath>
+#include <queue>
 #pragma once
 
 class SocialGraph {
@@ -15,8 +18,10 @@ private:
     std::vector<int> user_list; //Primarily for quick instantiation of users.
     int WeightedRandomDistribution(int input);
 public:
-    void ListAllUsers(); //DEBUG
-    void DescribeUser(); //DEBUG
+    void ListAllUsers(); //DEBUG FUNCTION
+    void DescribeUser(); //DEBUG FUNCTION
+    int GetUserNum(int i); //DEBUG FUNCTION
+    int GetUserFollowing(int i, int j); //DEBUG FUNCTION
     void InstantiateUsers(int num_users);
     void DijkstrasAlgorithm(int source_id, int destination_id);
 };
