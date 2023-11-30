@@ -24,5 +24,6 @@ public:
     int GetUserFollowing(int i, int j); //DEBUG FUNCTION
     void InstantiateUsers(int num_users);
     void DijkstrasAlgorithm(int source_id, int destination_id);
+    void AStarAlgorithm(int source_id, int destination_id);
 };
 

@@ -50,15 +50,16 @@ void SocialGraph::InstantiateUsers(int num_users) {
     }
 
     std::uniform_int_distribution<std::mt19937::result_type> order_dist(0, user_map.size() - 1);
-    std::uniform_int_distribution<std::mt19937::result_type> rng_dist(10, 700);
+    std::uniform_int_distribution<std::mt19937::result_type> followees_rng_dist(10, 700);
+    std::uniform_int_distribution<std::mt19937::result_type> interactions_rng_dist(10, 1000);
     int num_followees, num_interactions, sum_interactions = 0;
 
     //Step two: generate followee vectors for each user in user_map, with weights for number of interactions
     for (auto it = user_map.begin(); it != user_map.end(); it++) {
-        num_followees = WeightedRandomDistribution(rng_dist(rng));
+        num_followees = WeightedRandomDistribution(followees_rng_dist(rng));
 
         for (int i = 0; i < num_followees; i++) { //Initialize followed user IDs and weights with raw interaction numbers.
-            num_interactions = WeightedRandomDistribution(rng_dist(rng));
+            num_interactions = WeightedRandomDistribution(interactions_rng_dist(rng)) - 60;
             sum_interactions += num_interactions;
 
             int order_num = order_dist(rng);
@@ -126,4 +127,8 @@ void SocialGraph::DijkstrasAlgorithm(int source_id, int destination_id) {
     } else {
         std::cout << "The source node has " << strength[destination_id] << " influence on the destination node." << std::endl;
     }
+}
+
+void SocialGraph::AStarAlgorithm(int source_id, int destination_id) {
+    
 }
