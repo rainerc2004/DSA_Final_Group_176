@@ -15,12 +15,17 @@ void SocialGraph::ListAllUsers() { //Debug, lists the user ID of every user.
     }
 }
 
-void SocialGraph::DescribeUser() { //Debug, just lists every account the first instantiated user follows
-    auto it = user_map.begin();
+void SocialGraph::DescribeUser(int user) { //Lists every account the input user follows
+    auto it = user_map.find(user);
     std::cout << it->first << std::endl;
     for (int i = 0; i < it->second.size(); i++) {
         std::cout << "     " << it->second[i].first << ", " << it->second[i].second << std::endl;
     }
+
+}
+int SocialGraph::ValidUser(int user) {
+    auto it = user_map.count(user);
+    return it;
 }
 
 int SocialGraph::GetUserNum(int i) {

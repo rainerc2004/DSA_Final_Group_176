@@ -20,7 +20,8 @@ private:
     int WeightedRandomDistribution(int input);
 public:
     void ListAllUsers(); //DEBUG FUNCTION
-    void DescribeUser(); //DEBUG FUNCTION
+    void DescribeUser(int user);
+    int ValidUser(int user);
     int GetUserNum(int i); //DEBUG FUNCTION
     int GetUserFollowing(int i, int j); //DEBUG FUNCTION
     void InstantiateUsers(int num_users);
