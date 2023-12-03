@@ -133,6 +133,7 @@ void SocialGraph::DijkstrasAlgorithm(int source_id, int destination_id) {
 void SocialGraph::FloydWarshallAlgorithm(int source_id, int destination_id) {
     std::vector<std::vector<float>> v(user_count, std::vector<float>(user_count, -INFINITY));
     for (int i = 0; i < user_count; i++) {
+        std::cout << "first loop: " << i << std::endl;
         for (int j = 0; j < user_count; j++) {
             if (i == j)
                 v[i][j] = 0;
@@ -140,11 +141,25 @@ void SocialGraph::FloydWarshallAlgorithm(int source_id, int destination_id) {
                 for (int z = 0; z < user_map[user_list.at(i)].size(); z++) {
                     if (user_map[user_list.at(i)].at(z).first == user_list.at(j)) {
                             v[i][j] = user_map[user_list.at(i)].at(z).second;
+                            break;
                         }
                     }
                 }
             }
         }
+
+    std::cout << "hey!" << std::endl;
+    int k, i, j = 0;
+    for (k = 0; k < user_count; k++) {
+        std::cout << "second loop: " << k << std::endl;
+        for (i = 0; i < user_count; i++) {
+            for (j = 0; j < user_count; j++) {
+                if ((v[i][j] < v[i][k] * v[k][j]) && (v[k][j] != -INFINITY) && (v[i][k] != -INFINITY)) {
+                    v[i][j] = v[i][k] * v[k][j];
+                }
+            }
+        }
+    }
 
     int source_index, destination_index = -5;
     for (int y = 0; y < user_list.size(); y++) {
