@@ -14,6 +14,7 @@
 class SocialGraph {
 private:
     int max_num_user_IDs = 999999999; //User creation will get slow if number of users approaches this number.
+    int user_count = 0;
     std::unordered_map<int, std::vector<std::pair<int, float>>> user_map; //The adjacency map itself
     std::vector<int> user_list; //Primarily for quick instantiation of users.
     int WeightedRandomDistribution(int input);
@@ -24,6 +25,6 @@ public:
     int GetUserFollowing(int i, int j); //DEBUG FUNCTION
     void InstantiateUsers(int num_users);
     void DijkstrasAlgorithm(int source_id, int destination_id);
-    void AStarAlgorithm(int source_id, int destination_id);
+    void FloydWarshallAlgorithm(int source_id, int destination_id);
 };
 

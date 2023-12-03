@@ -32,6 +32,7 @@ int SocialGraph::GetUserFollowing(int i, int j) {
 }
 
 void SocialGraph::InstantiateUsers(int num_users) {
+    user_count = num_users;
     std::random_device dev;
     std::mt19937 rng(dev());
     std::uniform_int_distribution<std::mt19937::result_type> id_dist(1, max_num_user_IDs);
@@ -129,6 +130,34 @@ void SocialGraph::DijkstrasAlgorithm(int source_id, int destination_id) {
     }
 }
 
-void SocialGraph::AStarAlgorithm(int source_id, int destination_id) {
-    
+void SocialGraph::FloydWarshallAlgorithm(int source_id, int destination_id) {
+    std::vector<std::vector<float>> v(user_count, std::vector<float>(user_count, -INFINITY));
+    for (int i = 0; i < user_count; i++) {
+        for (int j = 0; j < user_count; j++) {
+            if (i == j)
+                v[i][j] = 0;
+            else {
+                for (int z = 0; z < user_map[user_list.at(i)].size(); z++) {
+                    if (user_map[user_list.at(i)].at(z).first == user_list.at(j)) {
+                            v[i][j] = user_map[user_list.at(i)].at(z).second;
+                        }
+                    }
+                }
+            }
+        }
+
+    int source_index, destination_index = -5;
+    for (int y = 0; y < user_list.size(); y++) {
+        if (user_list[y] == source_id) {
+            source_index = y;
+        }
+        if (user_list[y] == destination_id) {
+            destination_index = y;
+        }
+        if (source_index != -5 && destination_index != -5) {
+            break;
+        }
+    }
+
+    std::cout << v[source_index][destination_index] << std::endl;
 }
