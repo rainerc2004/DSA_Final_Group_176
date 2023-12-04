@@ -32,7 +32,7 @@ int main() {
         std::cout << "1. Get a random ID from the generated graph" << std::endl;
         std::cout << "2. Get a particular ID's adjacent nodes and weights" << std::endl;
         std::cout << "3. Traverse the generated graph using Dijkstra's Algorithm" << std::endl;
-        std::cout << "4. Traverse the generated graph using the Bellman Ford Algorithm" << std::endl;
+        std::cout << "4. Traverse the generated graph using the Bellman-Ford Algorithm" << std::endl;
         std::cout << "5. Traverse the generated graph using the Floyd-Warshall Algorithm" << std::endl;
         std::cout << "6. Exit the program" << std::endl;
         std::cin >> selection;
@@ -87,7 +87,7 @@ int main() {
         } else if (selection == 4) {
             valid = false;
             while(!valid) {
-                std::cout << "Please type the two IDs you want to perform the Bellman Ford algorithm on." << std::endl;
+                std::cout << "Please type the two IDs you want to perform the Bellman-Ford algorithm on." << std::endl;
                 std::cout << "Separate the two users with a space." << std::endl;
                 std::cin >> userA >> userB;
                 std::cout << std::endl;
@@ -102,7 +102,7 @@ int main() {
                     graph.BellmanFordAlgorithm(userA, userB);
                     end = std::chrono::high_resolution_clock::now();
                     duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
-                    std::cout << "Bellman Ford algorithm complete. Took " << duration * 0.000001 << " seconds." << std::endl;
+                    std::cout << "Bellman-Ford algorithm complete. Took " << duration * 0.000001 << " seconds." << std::endl;
                     valid = true;
                 }
             }
