@@ -135,6 +135,46 @@ void SocialGraph::DijkstrasAlgorithm(int source_id, int destination_id) {
     }
 }
 
+void SocialGraph::BellmanFordAlgorithm(int source_id, int destination_id) {
+    int vertexcount = user_count;
+    float destination[user_count];
+    int sourceindex, destinationindex = -1;
+
+    //Records source index and destination index, and instantiates "destination" vector holding strengths
+    for (int i = 0; i < user_count; i++) {
+        int tempid = user_list.at(i);
+        if (tempid==source_id) {
+            sourceindex = i;
+        }
+        if (tempid==destination_id) {
+            destinationindex = i;
+        }
+        destination[i] = -1000.0;
+    }
+    destination[sourceindex] = 1.0;
+
+    //Tightens edges |V| - 1 many times
+    for (int i = 1; i <= vertexcount - 1; i++) {
+        //Iterates through each vertex's edges (all edges on the graph)
+        for (int k = 1; k < vertexcount; k++) {
+            int tempid = user_list.at(k);
+            int tempedge = user_map[tempid].size();
+            for (int j = 0; j < tempedge; j++) {
+                //Finds index of the endpoint of each edge, along with the edge's associated weight
+                int edge_endpoint = user_map.at(tempid).at(j).first;
+                auto edge_endpoint_it = std::find(user_list.begin(), user_list.end(), edge_endpoint);
+                int edge_endpoint_index = edge_endpoint_it - user_list.begin();
+                float weight = user_map.at(tempid).at(j).second;
+                //Actual edge tightening comparison function
+                if ((destination[k] != -1000) && (destination[k] * weight > destination[edge_endpoint_index])) {
+                    destination[edge_endpoint_index] = destination[k] * weight;
+                }
+            }
+        }
+    }
+    std::cout<< destination[destinationindex] << std::endl;
+}
+
 void SocialGraph::FloydWarshallAlgorithm(int source_id, int destination_id) {
     //Instantiates a |users| x |users| matrix of strengths between two nodes
     std::vector<std::vector<float>> v(user_count, std::vector<float>(user_count, -INFINITY));
@@ -145,13 +185,13 @@ void SocialGraph::FloydWarshallAlgorithm(int source_id, int destination_id) {
             else {
                 for (int z = 0; z < user_map[user_list.at(i)].size(); z++) {
                     if (user_map[user_list.at(i)].at(z).first == user_list.at(j)) {
-                            v[i][j] = user_map[user_list.at(i)].at(z).second;
-                            break;
-                        }
+                        v[i][j] = user_map[user_list.at(i)].at(z).second;
+                        break;
                     }
                 }
             }
         }
+    }
 
     //The edge-strengthening part of Floyd-Warshall:
     int k, i, j = 0;

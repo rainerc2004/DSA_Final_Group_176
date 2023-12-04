@@ -98,7 +98,7 @@ int main() {
                 }
                 else {
                     start = std::chrono::high_resolution_clock::now();
-                    graph.FloydWarshallAlgorithm(userA, userB);
+                    graph.BellmanFordAlgorithm(userA, userB);
                     end = std::chrono::high_resolution_clock::now();
                     duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
                     std::cout << "Floyd-Warshall algorithm complete. Took " << duration * 0.000001 << " seconds." << std::endl;
