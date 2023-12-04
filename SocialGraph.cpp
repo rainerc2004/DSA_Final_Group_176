@@ -172,7 +172,7 @@ void SocialGraph::BellmanFordAlgorithm(int source_id, int destination_id) {
             }
         }
     }
-    std::cout<< destination[destinationindex] << std::endl;
+    std::cout<< "The source node has " << destination[destinationindex] << " influence on the destination node." << std::endl;
 }
 
 void SocialGraph::FloydWarshallAlgorithm(int source_id, int destination_id) {
@@ -220,5 +220,5 @@ void SocialGraph::FloydWarshallAlgorithm(int source_id, int destination_id) {
     }
 
     //Returns strength from source to destination
-    std::cout << v[source_index][destination_index] << std::endl;
+    std::cout << "The source node has " << v[source_index][destination_index] << " influence on the destination node." << std::endl;
 }
