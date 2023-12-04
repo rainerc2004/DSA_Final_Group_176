@@ -179,5 +179,6 @@ void SocialGraph::FloydWarshallAlgorithm(int source_id, int destination_id) {
         }
     }
 
+    //Returns strength from source to destination
     std::cout << v[source_index][destination_index] << std::endl;
 }
