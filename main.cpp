@@ -32,8 +32,9 @@ int main() {
         std::cout << "1. Get a random ID from the generated graph" << std::endl;
         std::cout << "2. Get a particular ID's adjacent nodes and weights" << std::endl;
         std::cout << "3. Traverse the generated graph using Dijkstra's Algorithm" << std::endl;
-        std::cout << "4. Traverse the generated graph using the Floyd-Warshall Algorithm" << std::endl;
-        std::cout << "5. Exit the program" << std::endl;
+        std::cout << "4. Traverse the generated graph using the Bellman Ford Algorithm" << std::endl;
+        std::cout << "5. Traverse the generated graph using the Floyd-Warshall Algorithm" << std::endl;
+        std::cout << "6. Exit the program" << std::endl;
         std::cin >> selection;
         std::cout << std::endl;
 
@@ -86,7 +87,7 @@ int main() {
         } else if (selection == 4) {
             valid = false;
             while(!valid) {
-                std::cout << "Please type the two IDs you want to perform the Floyd-Warshall algorithm on." << std::endl;
+                std::cout << "Please type the two IDs you want to perform the Bellman Ford algorithm on." << std::endl;
                 std::cout << "Separate the two users with a space." << std::endl;
                 std::cin >> userA >> userB;
                 std::cout << std::endl;
@@ -101,19 +102,40 @@ int main() {
                     graph.BellmanFordAlgorithm(userA, userB);
                     end = std::chrono::high_resolution_clock::now();
                     duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
-                    std::cout << "Floyd-Warshall algorithm complete. Took " << duration * 0.000001 << " seconds." << std::endl;
+                    std::cout << "Bellman Ford algorithm complete. Took " << duration * 0.000001 << " seconds." << std::endl;
                     valid = true;
                 }
             }
 
-        } else if (selection == 5) {
+        }else if (selection == 5) {
+            valid = false;
+            while(!valid) {
+                std::cout << "Please type the two IDs you want to perform the Floyd-Warshall algorithm on." << std::endl;
+                std::cout << "Separate the two users with a space." << std::endl;
+                std::cin >> userA >> userB;
+                std::cout << std::endl;
+                if (userA == -1 || userB == -1) {
+                    valid = true;
+                }
+                else if (graph.ValidUser(userA) == 0 || graph.ValidUser(userB) == 0) {
+                    std::cout << "One of your users is not a valid user. If you do not know the ID of a user type -1 twice." << std::endl;
+             }
+                else {
+                start = std::chrono::high_resolution_clock::now();
+                graph.FloydWarshallAlgorithm(userA, userB);
+                end = std::chrono::high_resolution_clock::now();
+                duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+                std::cout << "Floyd-Warshall algorithm complete. Took " << duration * 0.000001 << " seconds." << std::endl;
+                valid = true;
+                }
+            }
+        }else if (selection == 6) {
             std::cout << "Thank you for using our program. Have a great day!" << std::endl;
             exit = true;
         } else {
             std::cout << "Input was an unexpected value." << std::endl;
         }
     }
-
 
     return 0;
 }
