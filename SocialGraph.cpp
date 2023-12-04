@@ -116,10 +116,10 @@ void SocialGraph::DijkstrasAlgorithm(int source_id, int destination_id) {
             float target_weight = user_map[current_id][i].second;
 
             //If route through current_id is stronger than previous route, tighten the edge
-            if (strength[target_id] < strength[current_id] * (target_weight * pow(0.95, jumps[current_id] + 1))) {
+            if (strength[target_id] < strength[current_id] * target_weight) {
                 jumps[target_id] = jumps[current_id] + 1;
                 predecessors[target_id] = current_id;
-                strength[target_id] =  strength[current_id] * (target_weight * pow(0.95, jumps[current_id] + 1));
+                strength[target_id] =  strength[current_id] * target_weight;
 
                 //... and add the edge to the priority queue if it's unvisited
                 if (unvisited.find(target_id) != unvisited.end()) {
@@ -136,9 +136,9 @@ void SocialGraph::DijkstrasAlgorithm(int source_id, int destination_id) {
 }
 
 void SocialGraph::FloydWarshallAlgorithm(int source_id, int destination_id) {
+    //Instantiates a |users| x |users| matrix of strengths between two nodes
     std::vector<std::vector<float>> v(user_count, std::vector<float>(user_count, -INFINITY));
     for (int i = 0; i < user_count; i++) {
-        std::cout << "first loop: " << i << std::endl;
         for (int j = 0; j < user_count; j++) {
             if (i == j)
                 v[i][j] = 0;
@@ -153,10 +153,9 @@ void SocialGraph::FloydWarshallAlgorithm(int source_id, int destination_id) {
             }
         }
 
-    std::cout << "hey!" << std::endl;
+    //The edge-strengthening part of Floyd-Warshall:
     int k, i, j = 0;
     for (k = 0; k < user_count; k++) {
-        std::cout << "second loop: " << k << std::endl;
         for (i = 0; i < user_count; i++) {
             for (j = 0; j < user_count; j++) {
                 if ((v[i][j] < v[i][k] * v[k][j]) && (v[k][j] != -INFINITY) && (v[i][k] != -INFINITY)) {
@@ -166,6 +165,7 @@ void SocialGraph::FloydWarshallAlgorithm(int source_id, int destination_id) {
         }
     }
 
+    //Finds the indices of source_id and destination_id so their strengths can be accessed from "v"
     int source_index, destination_index = -5;
     for (int y = 0; y < user_list.size(); y++) {
         if (user_list[y] == source_id) {
